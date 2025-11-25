@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.module.css';
+import { createRoot } from 'react-dom/client';
+import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import axios from 'axios';
+import axios from '../src/axios';
 
 axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
 axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
@@ -11,7 +11,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 axios.interceptors.request.use(request => {
     console.log(request);
-    // Edit request config
     return request;
 }, error => {
     console.log(error);
@@ -20,12 +19,14 @@ axios.interceptors.request.use(request => {
 
 axios.interceptors.response.use(response => {
     console.log(response);
-    // Edit request config
     return response;
 }, error => {
     console.log(error);
     return Promise.reject(error);
 });
 
-ReactDOM.render( <App />, document.getElementById( 'root' ) );
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App />);
+
 registerServiceWorker();
